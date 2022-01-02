@@ -6,7 +6,7 @@ class Missile(pygame.sprite.Sprite):
     def __init__(self, player):
         super().__init__()
         self.player = player
-        self.velocity = 2
+        self.velocity = 3
         self.image = pygame.image.load(os.path.join(os.getcwd(), "src/assets/missile.png"))
         self.image = pygame.transform.scale(self.image, (50, 50))
         self.rect = self.image.get_rect()
@@ -28,8 +28,9 @@ class Missile(pygame.sprite.Sprite):
         self.rotate()
 
         # delete item if touch monster
-        if self.player.game.check_collision(self, self.player.game.all_monsters):
+        for monster in self.player.game.check_collision(self, self.player.game.all_monsters):
             self.remove()
+            monster.damage(self.player.attack)
 
         # delete item if not in screen
         if self.rect.x > 1080:

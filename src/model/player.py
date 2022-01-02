@@ -10,10 +10,10 @@ class Player(pygame.sprite.Sprite):
         self.game = game
         self.health = 100
         self.max_health = 100
-        self.attack = 10
+        self.attack = 20
         self.all_missiles = pygame.sprite.Group()
-        self.velocity = 1
-        self.gravity = 2
+        self.velocity = 5
+        self.gravity = 3
         self.image = pygame.image.load(os.path.join(os.getcwd(), "src/assets/player.png"))
         self.rect = self.image.get_rect()
         self.rect.y = 450
@@ -36,3 +36,14 @@ class Player(pygame.sprite.Sprite):
 
     def launch_missile(self):
         self.all_missiles.add(Missile(self))
+
+    def damage(self, damage):
+        self.health -= damage
+
+        # Game Over
+        if self.health < 0:
+            pygame.quit()
+
+    def update_health_bar(self, surface):
+        pygame.draw.rect(surface, (50, 50, 50), [self.rect.x + 50, self.rect.y + 15, self.max_health, 5])
+        pygame.draw.rect(surface, (138, 252, 0), [self.rect.x + 50, self.rect.y + 15, self.health, 5])

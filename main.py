@@ -3,6 +3,7 @@ from src.model.game import Game
 
 # generate game windows
 pygame.init()
+clock = pygame.time.Clock()
 pygame.display.set_caption("Shooter Tree Trunk")
 screen = pygame.display.set_mode((1080, 720))
 background = pygame.image.load("src/assets/background.jpg")
@@ -16,6 +17,7 @@ while running:
     # handle global environment (background,player,missile,alien,mummy)
     screen.blit(background, (0, -250))
     screen.blit(game.player.image, game.player.rect)
+    game.player.update_health_bar(screen)
     game.player.all_missiles.draw(screen)
     game.all_monsters.draw(screen)
 
@@ -26,6 +28,7 @@ while running:
     # handle monster
     for monster in game.all_monsters:
         monster.move()
+        monster.update_health_bar(screen)
 
     # handle game remotes
     if game.key_pressed.get(pygame.K_d) and game.player.rect.x + game.player.rect.width < screen.get_width():
@@ -62,3 +65,5 @@ while running:
                 game.player.launch_missile()
         elif event.type == pygame.KEYUP:
             game.key_pressed[event.key] = False
+
+    clock.tick(120)

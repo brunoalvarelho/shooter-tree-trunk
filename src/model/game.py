@@ -10,10 +10,11 @@ class Game:
         self.player = Player(self)
         self.all_players.add(self.player)
         self.all_monsters = pygame.sprite.Group()
-        self.spawn_monster()
+        self.spawn_monster('mummy')
+        self.spawn_monster('mummy')
 
-    def spawn_monster(self):
-        self.all_monsters.add(Monster(self, 'mummy'))
+    def spawn_monster(self, type_monster):
+        self.all_monsters.add(Monster(self, type_monster))
 
     def check_collision(self, sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
