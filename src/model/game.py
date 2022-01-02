@@ -60,7 +60,6 @@ class Game:
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
     def game_over(self):
-        print('pass')
         self.all_monsters = pygame.sprite.Group()
         self.player.health = self.player.max_health
         self.all_players = pygame.sprite.Group()

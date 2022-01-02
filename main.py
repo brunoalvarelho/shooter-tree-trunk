@@ -6,6 +6,7 @@ from src.model.game import Game
 pygame.init()
 clock = pygame.time.Clock()
 pygame.display.set_caption("Shooter Tree Trunk")
+pygame.display.set_icon(pygame.image.load('src/assets/player.png'))
 screen = pygame.display.set_mode((1080, 720))
 background = pygame.image.load("src/assets/background.jpg")
 banner = pygame.image.load("src/assets/banner.png")
