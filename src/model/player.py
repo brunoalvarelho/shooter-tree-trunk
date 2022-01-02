@@ -16,6 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.gravity = 3
         self.image = pygame.image.load(os.path.join(os.getcwd(), "src/assets/player.png"))
         self.rect = self.image.get_rect()
+        self.rect.x = 450
         self.rect.y = 450
 
     def move_left(self):
@@ -42,7 +43,7 @@ class Player(pygame.sprite.Sprite):
 
         # Game Over
         if self.health < 0:
-            pygame.quit()
+            self.game.game_over()
 
     def update_health_bar(self, surface):
         pygame.draw.rect(surface, (50, 50, 50), [self.rect.x + 50, self.rect.y + 15, self.max_health, 5])
