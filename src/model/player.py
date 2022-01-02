@@ -1,14 +1,17 @@
 import os
 import pygame
+from src.model.missile import Missile
 
 
 class Player(pygame.sprite.Sprite):
     # Player constructor
-    def __init__(self, ):
+    def __init__(self, game):
         super().__init__()
+        self.game = game
         self.health = 100
-        self.maxHealth = 100
+        self.max_health = 100
         self.attack = 10
+        self.all_missiles = pygame.sprite.Group()
         self.velocity = 1
         self.gravity = 2
         self.image = pygame.image.load(os.path.join(os.getcwd(), "src/assets/player.png"))
@@ -19,7 +22,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.x -= self.velocity
 
     def move_right(self):
-        self.rect.x += self.velocity
+        if not self.game.check_collision(self, self.game.all_monsters):
+            self.rect.x += self.velocity
 
     def jump(self):
         self.rect.y -= self.gravity
@@ -29,3 +33,6 @@ class Player(pygame.sprite.Sprite):
             self.rect.y = 450
         else:
             self.rect.y += self.gravity
+
+    def launch_missile(self):
+        self.all_missiles.add(Missile(self))
