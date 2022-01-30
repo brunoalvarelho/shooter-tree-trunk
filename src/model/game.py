@@ -1,6 +1,7 @@
 import pygame
 from src.model.player import Player
 from src.model.monster import Monster
+from src.event.comet_event import CometFallEvent
 
 
 class Game:
@@ -11,6 +12,7 @@ class Game:
         self.player = Player(self)
         self.all_players.add(self.player)
         self.all_monsters = pygame.sprite.Group()
+        self.comet_event = CometFallEvent(self)
 
     def start(self):
         self.is_playing = True
@@ -22,6 +24,12 @@ class Game:
         self.player.update_health_bar(screen)
         self.player.all_missiles.draw(screen)
         self.all_monsters.draw(screen)
+        self.comet_event.update_bar(screen)
+        self.comet_event.all_comets.draw(screen)
+
+        # handle comet
+        for comet in self.comet_event.all_comets:
+            comet.fall()
 
         # handle missile
         for missile in self.player.all_missiles:
@@ -65,4 +73,6 @@ class Game:
         self.all_players = pygame.sprite.Group()
         self.all_players.add(self.player)
         self.player.rect.y = 450
+        self.comet_event.all_comets = pygame.sprite.Group()
+        self.comet_event.reset_bar_percent()
         self.is_playing = False
